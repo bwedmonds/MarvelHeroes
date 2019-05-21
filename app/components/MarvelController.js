@@ -1,7 +1,5 @@
 import MarvelService from "./MarvelService.js";
 
-
-
 //private
 
 let _marvelService = new MarvelService();
@@ -11,9 +9,9 @@ function _drawMarvelHero() {
   let template = ''
   for (let i = 0; i < hero.length; i++) {
     let herolist = hero[i];
-    template += `<li>${herolist.name}`
+    template += herolist.Template
   }
-  document.getElementById('marvel-hero').innerHTML = template
+  document.getElementById("marvel-hero").innerHTML = template;
 }
 
 function _drawMyHero() {
@@ -21,20 +19,19 @@ function _drawMyHero() {
   let template = ''
   for (let i = 0; i < hero.length; i++) {
     let herolist = hero[i];
-    template += herolist.getTemplate(`
-        <button onclick="app.controllers.marvelController.removeHero('${herolist._id}')">Remove from Pokedex</button>`)
+    template += herolist.Template
   }
-  document.getElementById('my-hero').innerHTML = template
+  document.getElementById("my-hero").innerHTML = template;
 }
 
 //public
 export default class MarvelController {
   constructor() {
     //register subscribers
-    _marvelService.addSubscribers('marvelHeros', _drawMarvelHero)
-    _marvelService.addSubscribers('myHeroes', _drawMyHero)
+    _marvelService.addSubscriber('marvelHeroes', _drawMarvelHero)
+    _marvelService.addSubscriber('myHeroes', _drawMyHero)
     //fetch data
-    _marvelService.getMarvelHero()
+    _marvelService.getMarvelData()
     _marvelService.getMyHero()
   }
 
@@ -46,5 +43,3 @@ export default class MarvelController {
     _marvelService.removeHero(id)
   }
 }
-
-/* <button onclick="app.controllers.marvelController.getDetails('${poke.name}')">Get Details</button></li > ` */
